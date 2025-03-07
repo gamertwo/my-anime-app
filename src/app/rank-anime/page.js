@@ -29,7 +29,8 @@ export default function Home() {
   const [showSearchResults, setShowSearchResults] = useState(false);
   const [formErrors, setFormErrors] = useState({});
   const [sortOrder, setSortOrder] = useState('newest');
-  
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
   useEffect(() => {
     const storedAnimes = JSON.parse(localStorage.getItem('animes') || '[]');
     setRecentRatings(storedAnimes.slice(-5).reverse());
@@ -207,38 +208,81 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-950 text-gray-200">
-      <nav className="bg-gray-800 border-b border-gray-700 sticky top-0 z-10 shadow-lg">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center">
-              <span className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500">
-                AnimeScore
-              </span>
-            </div>
-            <div className="hidden md:flex space-x-4">
-              <Link href="/" className="px-3 py-2 rounded-md text-blue-400 bg-gray-700 transition-all hover:bg-gray-600">
-                Rate Anime
-              </Link>
-              <Link href="/leaderboard" className="px-3 py-2 rounded-md text-gray-300 hover:bg-gray-700 hover:text-blue-400 transition-all">
-                Leaderboard
-              </Link>
-              <Link href="/stats" className="px-3 py-2 rounded-md text-gray-300 hover:bg-gray-700 hover:text-blue-400 transition-all">
-                Stats
-              </Link>
-              <Link href="/manage-data" className="px-3 py-2 rounded-md text-gray-300 hover:bg-gray-700 hover:text-blue-400 transition-all">
-                Export
-              </Link>
-            </div>
-            <div className="md:hidden">
-              <button className="p-2 rounded-md text-gray-300 hover:bg-gray-700 focus:outline-none">
-                <svg className="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16m-7 6h7" />
-                </svg>
-              </button>
-            </div>
-          </div>
+   <nav className="bg-gray-800 border-b border-gray-700 sticky top-0 z-10 shadow-lg">
+  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="flex justify-between items-center h-16">
+      <div className="flex items-center">
+        <span className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500">
+          AnimeScore
+        </span>
+      </div>
+      
+      {/* Desktop Menu */}
+      <div className="hidden md:flex space-x-4">
+        <Link href="/" className="px-3 py-2 rounded-md text-blue-400 bg-gray-700 transition-all hover:bg-gray-600">
+          Rate Anime
+        </Link>
+        <Link href="/leaderboard" className="px-3 py-2 rounded-md text-gray-300 hover:bg-gray-700 hover:text-blue-400 transition-all">
+          Leaderboard
+        </Link>
+        <Link href="/stats" className="px-3 py-2 rounded-md text-gray-300 hover:bg-gray-700 hover:text-blue-400 transition-all">
+          Stats
+        </Link>
+        <Link href="/manage-data" className="px-3 py-2 rounded-md text-gray-300 hover:bg-gray-700 hover:text-blue-400 transition-all">
+          Export
+        </Link>
+      </div>
+
+      {/* Mobile Menu Button */}
+      <div className="md:hidden">
+        <button 
+          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          className="p-2 rounded-md text-gray-300 hover:bg-gray-700 focus:outline-none"
+        >
+          <svg className="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16m-7 6h7" />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    {/* Mobile Menu Dropdown */}
+    {isMobileMenuOpen && (
+      <div className="md:hidden">
+        <div className="px-2 pt-2 pb-3 space-y-1">
+          <Link 
+            href="/" 
+            className="block px-3 py-2 rounded-md text-base font-medium text-blue-400 bg-gray-700"
+            onClick={() => setIsMobileMenuOpen(false)}
+          >
+            Rate Anime
+          </Link>
+          <Link 
+            href="/leaderboard" 
+            className="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-blue-400"
+            onClick={() => setIsMobileMenuOpen(false)}
+          >
+            Leaderboard
+          </Link>
+          <Link 
+            href="/stats" 
+            className="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-blue-400"
+            onClick={() => setIsMobileMenuOpen(false)}
+          >
+            Stats
+          </Link>
+          <Link 
+            href="/manage-data" 
+            className="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-blue-400"
+            onClick={() => setIsMobileMenuOpen(false)}
+          >
+            Export
+          </Link>
         </div>
-      </nav>
+      </div>
+    )}
+  </div>
+</nav>
 
       <div className="max-w-6xl mx-auto p-4 md:p-6 grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2">
